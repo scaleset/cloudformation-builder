@@ -2,12 +2,12 @@ package com.scaleset.cfbuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.scaleset.cfbuilder.core.CloudFormationJsonModule;
 import com.scaleset.cfbuilder.core.Module;
 import com.scaleset.cfbuilder.core.Template;
 import com.scaleset.cfbuilder.ec2.Instance;
 import com.scaleset.cfbuilder.ec2.SecurityGroup;
 import com.scaleset.cfbuilder.ec2.SecurityGroupIngress;
-import com.scaleset.cfbuilder.core.CloudFormationJsonModule;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,23 +42,32 @@ public class TemplateTest extends Assert {
                     () -> numParam("NodeCount", 2, "Number of elasticsearch nodes to create"));
 
             Object clusterName = option("clusterName").orElse("elasticsearch");
+            Object cidrIp = template.ref("OpenCidrIp");
+            Object keyName = template.ref("KeyName");
+            Object imageId = template.ref("ImageId");
+            Object az = template.ref("MyAZ");
+            Object instanceProfile = ref("InstanceProfile");
+            Object vpcId = template.ref("VpcId");
 
             SecurityGroup securityGroup = resource(SecurityGroup.class, "SecurityGroup")
-                    .vpcId(template.ref("VpcId"))
-                    .ingress(ingress -> ingress.setCidrIp(template.ref("OpenCidrIp")), "tcp", 22, 9200, 9300, range(27018, 27019));
+                    .vpcId(vpcId)
+                    .ingress(ingress -> ingress.cidrIp(cidrIp), "tcp", 22, 9200, 9300, range(27018, 27019));
+
+            // Object groupId = securityGroup.fnGetAtt("GroupId");
+            Object groupId = fnGetAtt("SecurityGroup", "GroupId");
 
             resource(SecurityGroupIngress.class, "SelfReferenceIngress")
-                    .sourceSecurityGroupId(fnGetAtt("SecurityGroup", "GroupId"))
-                    .groupId(fnGetAtt("SecurityGroup", "GroupId"))
+                    .sourceSecurityGroupId(groupId)
+                    .groupId(groupId)
                     .ipProtocol("tcp")
                     .port(9300);
 
             resource(Instance.class, "Instance")
                     .name(ns("Instance"))
-                    .availabilityZone(template.ref("MyAZ"))
-                    .keyName(template.ref("KeyName"))
-                    .imageId(template.ref("ImageId"))
-                    .instanceProfile(ref("InstanceProfile"))
+                    .availabilityZone(az)
+                    .keyName(keyName)
+                    .imageId(imageId)
+                    .instanceProfile(instanceProfile)
                     .instanceType(instanceType)
                     .securityGroupIds(securityGroup);
         }
