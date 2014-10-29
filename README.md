@@ -12,7 +12,7 @@ Quick Start
 <dependency>
     <groupId>com.scaleset</groupId>
     <artifactId>cloudformation-builder</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
