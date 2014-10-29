@@ -55,4 +55,4 @@ Quick Start
 
 ### License
 
-Scaleset Geo is [Apache 2.0 licensed](http://www.apache.org/licenses/LICENSE-2.0.html).
+CloudFormat-Builder is [Apache 2.0 licensed](http://www.apache.org/licenses/LICENSE-2.0.html).
