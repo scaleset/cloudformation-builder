@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-@JsonPropertyOrder({ "Id", "Type", "Properties"})
+@JsonPropertyOrder({"Id", "Type", "Properties"})
 public interface Resource extends Referenceable {
 
     @JsonProperty("Id")
@@ -18,5 +18,9 @@ public interface Resource extends Referenceable {
     JsonNode getProperties();
 
     Tag tag(String key, String value);
+
+    default Fn fnGetAtt(String attributeName) {
+        return new Fn("GetAtt", getId(), attributeName);
+    }
 
 }

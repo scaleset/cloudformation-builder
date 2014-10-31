@@ -27,7 +27,7 @@ public interface SecurityGroup extends Resource {
                 throw new IllegalArgumentException("Not a valid port or port range");
             }
             AnonymousSecurityGroupIngress ingress = new AnonymousSecurityGroupIngress(from, to);
-            ingress.setIpProtocol(protocol);
+            ingress.ipProtocol(protocol);
             if (callback != null) {
                 callback.accept(ingress);
             }
@@ -96,24 +96,29 @@ public interface SecurityGroup extends Resource {
             return toPort;
         }
 
-        public void setCidrIp(Object cidrIp) {
+        public AnonymousSecurityGroupIngress cidrIp(Object cidrIp) {
             this.cidrIp = cidrIp;
+            return this;
         }
 
-        public void setIpProtocol(String ipProtocol) {
+        public AnonymousSecurityGroupIngress ipProtocol(String ipProtocol) {
             this.ipProtocol = ipProtocol;
+            return this;
         }
 
-        public void setSourceSecurityGroupId(Object sourceSecurityGroupId) {
+        public AnonymousSecurityGroupIngress sourceSecurityGroupId(Object sourceSecurityGroupId) {
             this.sourceSecurityGroupId = sourceSecurityGroupId;
+            return this;
         }
 
-        public void setSourceSecurityGroupName(Object sourceSecurityGroupName) {
+        public AnonymousSecurityGroupIngress sourceSecurityGroupName(Object sourceSecurityGroupName) {
             this.sourceSecurityGroupName = sourceSecurityGroupName;
+            return this;
         }
 
-        public void setSourceSecurityGroupOwnerId(Object sourceSecurityGroupOwnerId) {
+        public AnonymousSecurityGroupIngress sourceSecurityGroupOwnerId(Object sourceSecurityGroupOwnerId) {
             this.sourceSecurityGroupOwnerId = sourceSecurityGroupOwnerId;
+            return this;
         }
     }
 }

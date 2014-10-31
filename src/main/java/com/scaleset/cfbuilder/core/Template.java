@@ -64,8 +64,8 @@ public class Template {
         this.version = version;
     }
 
-    public Parameter numParam(String id, Number defaultValue, String description) {
-        Parameter result = new Parameter(id, "Number", defaultValue, description);
+    public Parameter numParam(String id) {
+        Parameter result = new Parameter().id(id).type("Number");
         parameters.put(id, result);
         return result;
     }
@@ -92,8 +92,8 @@ public class Template {
         return result;
     }
 
-    public Parameter strParam(String id, String defaultValue, String description) {
-        Parameter result = new Parameter(id, "String", defaultValue, description);
+    public Parameter strParam(String id) {
+        Parameter result = new Parameter().id(id).type("String");
         parameters.put(id, result);
         return result;
     }

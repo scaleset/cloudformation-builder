@@ -38,12 +38,12 @@ public class Module {
         return template.fnGetAtt(ns(resource), attribute);
     }
 
-    public Parameter strParam(String id, String defaultValue, String description) {
-        return template.strParam(ns(id), defaultValue, description);
+    public Parameter strParam(String id) {
+        return template.strParam(ns(id));
     }
 
-    public Parameter numParam(String id, int defaultValue, String description) {
-        return template.numParam(ns(id), defaultValue, description);
+    public Parameter numParam(String id) {
+        return template.numParam(ns(id));
     }
 
     protected Optional<Object> option(String name) {
