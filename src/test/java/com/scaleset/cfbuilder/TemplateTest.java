@@ -37,9 +37,9 @@ public class TemplateTest extends Assert {
         public void build() throws Exception {
 
             Object instanceType = option("instanceType").orElseGet(
-                    () -> strParam("InstanceType", "m1.small", ns("Instance") + " instance type"));
+                    () -> strParam("InstanceType").defaultValue("m1.small").description(ns("Instance") + " instance type"));
             Object nodeCount = option("nodeCount").orElseGet(
-                    () -> numParam("NodeCount", 2, "Number of elasticsearch nodes to create"));
+                    () -> numParam("NodeCount").defaultValue(2).description("Number of elasticsearch nodes to create"));
 
             Object clusterName = option("clusterName").orElse("elasticsearch");
             Object cidrIp = template.ref("OpenCidrIp");
@@ -54,7 +54,6 @@ public class TemplateTest extends Assert {
                     .ingress(ingress -> ingress.cidrIp(cidrIp), "tcp", 22, 9200, 9300, range(27018, 27019));
 
             Object groupId = securityGroup.fnGetAtt("GroupId");
-            //Object groupId = fnGetAtt("SecurityGroup", "GroupId");
 
             resource(SecurityGroupIngress.class, "SelfReferenceIngress")
                     .sourceSecurityGroupId(groupId)

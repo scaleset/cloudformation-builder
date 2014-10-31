@@ -19,6 +19,7 @@ public class Parameter implements Referenceable {
 
     private String description;
 
+    @JsonProperty("Default")
     private Object defaultValue;
 
     private Boolean noEcho;
@@ -26,6 +27,16 @@ public class Parameter implements Referenceable {
     private List<Object> allowedValues = new ArrayList<>();
 
     private String allowedPattern;
+
+    private Integer maxLength;
+
+    private Integer minLength;
+
+    private Number maxValue;
+
+    private Number minValue;
+
+    private String constraintDescription;
 
     protected Parameter() {
     }
@@ -42,6 +53,33 @@ public class Parameter implements Referenceable {
         this.type = type;
         this.defaultValue = defaultValue;
         this.description = description;
+    }
+
+    public Parameter allowedPattern(String value) {
+        this.allowedPattern = allowedPattern;
+        return this;
+    }
+
+    public Parameter allowedValues(Object... values) {
+        for (Object value : values) {
+            this.allowedValues.add(value);
+        }
+        return this;
+    }
+
+    public Parameter constraintDescription(String value) {
+        this.constraintDescription = value;
+        return this;
+    }
+
+    public Parameter defaultValue(Object defaultValue) {
+        this.defaultValue = defaultValue;
+        return this;
+    }
+
+    public Parameter description(String description) {
+        this.description = description;
+        return this;
     }
 
     public String getAllowedPattern() {
@@ -72,7 +110,48 @@ public class Parameter implements Referenceable {
         return type;
     }
 
+    public Parameter id(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Parameter maxLength(Integer maxLength) {
+        this.maxLength = maxLength;
+        return this;
+    }
+
+    public Parameter maxValue(Number maxValue) {
+        this.maxValue = maxValue;
+        return this;
+    }
+
+    public Parameter minLength(Integer minLength) {
+        this.minLength = minLength;
+        return this;
+    }
+
+    public Parameter minValue(Number minValue) {
+        this.minValue = minValue;
+        return this;
+    }
+
+    public Parameter noEcho() {
+        this.noEcho = true;
+        return this;
+    }
+
+    public Parameter noEcho(boolean value) {
+        this.noEcho = value;
+        return this;
+    }
+
     public Ref ref() {
         return new Ref(id);
     }
+
+    public Parameter type(String type) {
+        this.type = type;
+        return this;
+    }
+
 }
