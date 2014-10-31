@@ -53,8 +53,8 @@ public class TemplateTest extends Assert {
                     .vpcId(vpcId)
                     .ingress(ingress -> ingress.cidrIp(cidrIp), "tcp", 22, 9200, 9300, range(27018, 27019));
 
-            // Object groupId = securityGroup.fnGetAtt("GroupId");
-            Object groupId = fnGetAtt("SecurityGroup", "GroupId");
+            Object groupId = securityGroup.fnGetAtt("GroupId");
+            //Object groupId = fnGetAtt("SecurityGroup", "GroupId");
 
             resource(SecurityGroupIngress.class, "SelfReferenceIngress")
                     .sourceSecurityGroupId(groupId)
