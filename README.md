@@ -9,7 +9,7 @@ Quick Start
 ### Dependency
 
 ```xml
-    <groupId>com.scaleset</groupId>
+<groupId>com.scaleset</groupId>
     <artifactId>cloudformation-builder</artifactId>
     <version>0.2.0</version>
 </dependency>
