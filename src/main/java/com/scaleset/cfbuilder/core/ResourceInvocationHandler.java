@@ -133,10 +133,10 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
             result = method.invoke(this, args);
         } else if (isRef(method, args)) {
             result = ref();
-        } else if (isTag(method, args)) {
-            result = doTag(proxy, method, args);
         } else if (method.isDefault()) {
             result = doDefaultMethod(proxy, method, args);
+        } else if (isTag(method, args)) {
+            result = doTag(proxy, method, args);
         } else if (isSetter(method, args)) {
             result = doSetter(proxy, method, args);
         } else {

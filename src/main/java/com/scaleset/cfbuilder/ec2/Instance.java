@@ -20,7 +20,7 @@ public interface Instance extends Resource, Taggable {
     Instance securityGroupIds(Object... values);
 
     default Instance name(String name) {
-        tag("Name", name).propagateAtLaunch();
+        tag("Name", name);
         return this;
     }
 
