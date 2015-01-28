@@ -43,5 +43,5 @@ public interface AutoScalingGroup extends Resource {
 
     AutoScalingGroup terminationPolicies(Object... values);
 
-    /// AutoScalingGroup VPCZoneIdentifier(Object... values);
+    AutoScalingGroup VPCZoneIdentifier(Object... values);
 }
