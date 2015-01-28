@@ -89,15 +89,6 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
         return result;
     }
 
-    private Tag doTag(Object proxy, Method method, Object[] args) {
-        String key = args[0].toString();
-        String value = args[1].toString();
-        Tag tag = new Tag(key, value);
-        //node.withArray("Tags").addObject().put(key, value);
-        properties.withArray("Tags").add(tag.toNode());
-        return tag;
-    }
-
     /**
      * Get the setProperty name of the variable from the getter/setter method name
      */
@@ -135,8 +126,6 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
             result = ref();
         } else if (method.isDefault()) {
             result = doDefaultMethod(proxy, method, args);
-        } else if (isTag(method, args)) {
-            result = doTag(proxy, method, args);
         } else if (isSetter(method, args)) {
             result = doSetter(proxy, method, args);
         } else {

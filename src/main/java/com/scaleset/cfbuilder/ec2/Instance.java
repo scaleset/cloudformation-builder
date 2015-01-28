@@ -5,7 +5,7 @@ import com.scaleset.cfbuilder.core.Resource;
 import com.scaleset.cfbuilder.core.Taggable;
 
 @Type("AWS::EC2::Instance")
-public interface Instance extends Resource, Taggable {
+public interface Instance extends Taggable {
 
     Instance availabilityZone(Object... values);
 

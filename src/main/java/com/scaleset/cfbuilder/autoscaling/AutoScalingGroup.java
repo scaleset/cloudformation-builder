@@ -3,10 +3,11 @@ package com.scaleset.cfbuilder.autoscaling;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.scaleset.cfbuilder.annotations.Type;
 import com.scaleset.cfbuilder.core.Resource;
+import com.scaleset.cfbuilder.core.Taggable;
 
 
 @Type("AWS::AutoScaling::AutoScalingGroup")
-public interface AutoScalingGroup extends Resource {
+public interface AutoScalingGroup extends Taggable {
 
     AutoScalingGroup availabilityZone(Object... values);
 
@@ -34,11 +35,14 @@ public interface AutoScalingGroup extends Resource {
 
     AutoScalingGroup placementGroup(Object value);
 
-    default AutoScalingTag tag(String key, String value) {
-        AutoScalingTag tag = new AutoScalingTag(key, value);
-        //node.withArray("Tags").addObject().put(key, value);
-        ((ArrayNode) getProperties().withArray("Tags")).add(tag.toNode());
-        return tag;
+    default AutoScalingGroup tag(String key, String value) {
+        tags(new AutoScalingTag(key, value, false));
+        return this;
+    }
+
+    default AutoScalingGroup tag(String key, String value, boolean propagateAtLaunch) {
+        tags(new AutoScalingTag(key, value, propagateAtLaunch));
+        return this;
     }
 
     AutoScalingGroup terminationPolicies(Object... values);

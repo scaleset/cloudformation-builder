@@ -16,10 +16,6 @@ public class Tag {
         return node.get("Key").textValue();
     }
 
-    public Boolean getPropagateAtLaunch() {
-        return node.get("PropagateAtLaunch").asBoolean(false);
-    }
-
     public String getValue() {
         return node.get("Value").textValue();
     }

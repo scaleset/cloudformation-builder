@@ -8,9 +8,13 @@ public class AutoScalingTag extends Tag {
         super(key, value);
     }
 
-    public AutoScalingTag propagateAtLaunch() {
+    public AutoScalingTag(String key, String value, boolean propagateAtLaunch) {
+        super(key, value);
         node.put("PropagateAtLaunch", true);
-        return this;
+    }
+
+    public Boolean getPropagateAtLaunch() {
+        return node.get("PropagateAtLaunch").asBoolean(false);
     }
 
 }
