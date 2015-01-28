@@ -17,8 +17,6 @@ public interface Resource extends Referenceable {
     @JsonProperty("Properties")
     JsonNode getProperties();
 
-    Tag tag(String key, String value);
-
     default Fn fnGetAtt(String attributeName) {
         return new Fn("GetAtt", getId(), attributeName);
     }
