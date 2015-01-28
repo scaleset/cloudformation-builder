@@ -1,6 +1,7 @@
 package com.scaleset.cfbuilder.autoscaling;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.scaleset.cfbuilder.annotations.Type;
 import com.scaleset.cfbuilder.core.Resource;
 import com.scaleset.cfbuilder.core.Taggable;
@@ -27,18 +28,21 @@ public interface AutoScalingGroup extends Taggable {
 
     AutoScalingGroup maxSize(Object value);
 
-    // AutoScalingGroup metricsCollection(MetricsCollection ...values);
+    AutoScalingGroup metricsCollection(MetricsCollection... metricsCollection);
+
+    default AutoScalingGroup metricsCollection(String granularity, String... metrics) {
+        return metricsCollection(new MetricsCollection(granularity, metrics));
+    }
 
     AutoScalingGroup minSize(Object value);
 
-    // AutoScalingGroup notificationConfiguration(NotificationConfiguration value);
+    AutoScalingGroup notificationConfiguration(NotificationConfiguration value);
+
+    default AutoScalingGroup notificationConfiguration(String topicARN, String[] notificationTypes) {
+        return notificationConfiguration(new NotificationConfiguration(topicARN, notificationTypes));
+    }
 
     AutoScalingGroup placementGroup(Object value);
-
-    default AutoScalingGroup tag(String key, String value) {
-        tags(new AutoScalingTag(key, value, false));
-        return this;
-    }
 
     default AutoScalingGroup tag(String key, String value, boolean propagateAtLaunch) {
         tags(new AutoScalingTag(key, value, propagateAtLaunch));

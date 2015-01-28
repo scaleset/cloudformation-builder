@@ -72,7 +72,8 @@ public class TemplateTest extends Assert {
                     .instanceType(instanceType)
                     .securityGroupIds(securityGroup);
 
-            resource(AutoScalingGroup.class, "testGroup").tag("key", "value", true);
+            resource(AutoScalingGroup.class, "testGroup").tag("key", "value", true)
+                    .metricsCollection("1Minute", "GroupMinSize", "GroupMaxSize");
         }
     }
 

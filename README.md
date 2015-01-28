@@ -1,7 +1,7 @@
 cloudformation-builder
 ======================
 
-CloudFormation-Builder is a Java 8 framework for creating AWS CloudFormation templates.
+CloudFormation-Builder is a Java 8 DSL for creating AWS CloudFormation templates.
 
 Quick Start
 -----------
@@ -12,7 +12,7 @@ Quick Start
 <dependency>
     <groupId>com.scaleset</groupId>
     <artifactId>cloudformation-builder</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 

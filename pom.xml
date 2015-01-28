@@ -11,7 +11,7 @@
     <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>cloudformation-builder</name>
-    <description>Java framework for creating CloudFormation templates</description>
+    <description>Java DSL for creating CloudFormation templates</description>
     <url>https://github.com/scaleset/cloudformation-builder</url>
     <licenses>
         <license>
