@@ -31,6 +31,9 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
     @JsonProperty("Properties")
     private ObjectNode properties = JsonNodeFactory.instance.objectNode();
 
+    @JsonProperty
+    private ObjectNode metadata = JsonNodeFactory.instance.objectNode();
+
     public ResourceInvocationHandler(Class<T> resourceClass, String id) {
         if (resourceClass.isAnnotationPresent(Type.class)) {
             Type type = resourceClass.getAnnotation(Type.class);
@@ -128,6 +131,8 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
                 result = type;
             } else if ("Properties".equals(name)) {
                 return properties;
+            } else if ("Metadata".equals(name)){
+                return metadata;
             }
         } else if (declaringClass.equals(Object.class)) {
             result = method.invoke(this, args);

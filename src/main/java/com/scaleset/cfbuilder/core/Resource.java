@@ -1,14 +1,15 @@
 package com.scaleset.cfbuilder.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-@JsonPropertyOrder({"Id", "Type", "Properties"})
+@JsonPropertyOrder({"Type", "Properties"})
 public interface Resource extends Referenceable {
 
-    @JsonProperty("Id")
+    @JsonIgnore
     String getId();
 
     @JsonProperty("Type")
@@ -16,6 +17,10 @@ public interface Resource extends Referenceable {
 
     @JsonProperty("Properties")
     JsonNode getProperties();
+
+    @JsonProperty("Metadata")
+    JsonNode getMetadata();
+
 
     Tag tag(String key, String value);
 
