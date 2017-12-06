@@ -9,19 +9,19 @@ public interface DBInstance extends Taggable {
 
     DBInstance engine(String engine);
 
-    DBInstance dbName(String dbName);
+    DBInstance dBName(String dBName);
 
     DBInstance masterUsername(String masterUsername);
 
     DBInstance masterUserPassword(String masterUserPassword);
 
-    DBInstance dbInstanceClass(String dbInstanceClass);
+    DBInstance dBInstanceClass(String dBInstanceClass);
 
     DBInstance allocatedStorage(int allocatedStorage);
 
     DBInstance storageType(String storageType);
 
-    DBInstance vpcSecurityGroups(Object... vpcSecurityGroup);
+    DBInstance vPCSecurityGroups(Object... vPCSecurityGroup);
 
     default DBInstance name(String name) {
         tag("Name", name);
