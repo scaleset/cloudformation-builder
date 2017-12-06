@@ -6,6 +6,7 @@ import com.scaleset.cfbuilder.core.Template;
 import com.scaleset.cfbuilder.ec2.Instance;
 import com.scaleset.cfbuilder.ec2.SecurityGroup;
 import com.scaleset.cfbuilder.ec2.SecurityGroupIngress;
+import com.scaleset.cfbuilder.rds.DBInstance;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -28,7 +29,6 @@ public class CloudFormationBuilderTest extends Module {
         private static final String KEYNAME_TYPE = "AWS::EC2::KeyPair::KeyName";
         private static final String KEYNAME_CONSTRAINT_DESCRIPTION = "must be the name of an existing EC2 KeyPair.";
 
-
         public void build() throws Exception {
             
             Parameter keyName = (Parameter) option("KeyName").orElseGet(
@@ -39,23 +39,31 @@ public class CloudFormationBuilderTest extends Module {
 
             Object cidrIp = "0.0.0.0/0";
             Object keyNameVar = template.ref("KeyName");
+            Object webServerSecurityGroupName = template.ref("WebServerSecurityGroup");
+            Object dbEc2SecurityGroupId = template.fnGetAtt("DBEC2SecurityGroup", "GroupId");
 
-            SecurityGroup webServerSecurityGroup = resource(SecurityGroup.class, "WebServerSecurityGroup").groupDescription("Enable ports 80 and 22")
-                .ingress(ingress -> ingress.cidrIp(cidrIp), "tcp", 80, 22);
-
-            Object groupId = webServerSecurityGroup.fnGetAtt("GroupId");
-
-            resource(SecurityGroupIngress.class, "SelfReferenceIngress")
-                .sourceSecurityGroupId(groupId)
-                .groupId(groupId)
-                .ipProtocol("tcp")
-                .port(9300);
+            SecurityGroup webServerSecurityGroup = resource(SecurityGroup.class, "WebServerSecurityGroup")
+                    .groupDescription("Enable ports 80 and 22")
+                    .ingress(ingress -> ingress.cidrIp(cidrIp), "tcp", 80, 22);
+            SecurityGroup dbEc2SecurityGroup = resource(SecurityGroup.class, "DBEC2SecurityGroup")
+                    .groupDescription("Open database for access")
+                    .ingress(ingress -> ingress.sourceSecurityGroupName(webServerSecurityGroupName), "tcp", 3306);
 
             Instance webServerInstance = resource(Instance.class, "WebServerInstance")
                 .imageId("ami-0def3275")
                 .instanceType("t2.micro")
                 .securityGroupIds(webServerSecurityGroup)
                 .keyName(keyNameVar);
+
+            resource(DBInstance.class, "MySQLDatabase")
+                    .engine("MySQL")
+                    .dbName("mydatabase")
+                    .masterUsername("root")
+                    .masterUserPassword("abcd1234")
+                    .dbInstanceClass("db.t2.micro")
+                    .allocatedStorage(20)
+                    .storageType("gp2")
+                    .vpcSecurityGroups(dbEc2SecurityGroupId);
 
             Object publicDNSName = webServerInstance.fnGetAtt("PublicDnsName");
 
