@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Apache 2.0 licence file
 - Jenkinsfile and travis.yml to allow CI
 - Jacoco Plugin to the POM
+- "AWS::RDS::DBInstance" resource
 
 ### Removed
 - Uneeded parts in `pom.xml` (signing, outdated and wrong parent)
