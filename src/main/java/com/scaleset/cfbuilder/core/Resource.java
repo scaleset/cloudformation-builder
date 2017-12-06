@@ -21,9 +21,6 @@ public interface Resource extends Referenceable {
     @JsonProperty("Metadata")
     JsonNode getMetadata();
 
-
-    Tag tag(String key, String value);
-
     default Fn fnGetAtt(String attributeName) {
         return new Fn("GetAtt", getId(), attributeName);
     }

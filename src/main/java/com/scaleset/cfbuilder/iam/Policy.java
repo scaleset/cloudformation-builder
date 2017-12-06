@@ -10,7 +10,7 @@ public interface Policy extends Resource {
 
     Policy policyDocument(Object value);
 
-    Policy policyName(String value);
+    Policy policyName(Object value);
 
     Policy roles(Object... roles);
 

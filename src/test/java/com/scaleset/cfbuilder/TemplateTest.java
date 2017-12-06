@@ -2,6 +2,8 @@ package com.scaleset.cfbuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.scaleset.cfbuilder.autoscaling.AutoScalingGroup;
+import com.scaleset.cfbuilder.autoscaling.AutoScalingTag;
 import com.scaleset.cfbuilder.core.CloudFormationJsonModule;
 import com.scaleset.cfbuilder.core.Module;
 import com.scaleset.cfbuilder.core.Template;
@@ -69,6 +71,9 @@ public class TemplateTest extends Assert {
                     .instanceProfile(instanceProfile)
                     .instanceType(instanceType)
                     .securityGroupIds(securityGroup);
+
+            resource(AutoScalingGroup.class, "testGroup").tag("key", "value", true)
+                    .metricsCollection("1Minute", "GroupMinSize", "GroupMaxSize");
         }
     }
 
