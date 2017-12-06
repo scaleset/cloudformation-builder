@@ -45,7 +45,7 @@ public class CloudFormationJsonModule extends SimpleModule {
 
             ObjectCodec oc = jsonParser.getCodec();
             JsonNode node = oc.readTree(jsonParser);
-            String id = node.get("Id").asText();
+            String id = node.asText();
             String type = node.get("Type").asText();
             ObjectNode properties = (ObjectNode) node.get("Properties");
             Class<? extends Resource> resourceClass = types.get(type);

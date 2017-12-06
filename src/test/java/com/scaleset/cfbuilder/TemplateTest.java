@@ -2,6 +2,7 @@ package com.scaleset.cfbuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.scaleset.cfbuilder.autoscaling.AutoScalingGroup;
 import com.scaleset.cfbuilder.autoscaling.AutoScalingTag;
 import com.scaleset.cfbuilder.core.CloudFormationJsonModule;
@@ -23,14 +24,14 @@ public class TemplateTest extends Assert {
         new TestModule().id("Test").template(t).build();
         new TestModule().id("Test2").template(t).build();
 
-        System.err.println(t.toString());
+        System.err.println(t.toString(false));
 
         ObjectMapper mapper = new ObjectMapper().registerModule(new CloudFormationJsonModule().scanTypes());
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.PASCAL_CASE_TO_CAMEL_CASE);
 
-        Template template = mapper.readValue(t.toString(), Template.class);
+        Template template = mapper.readValue(t.toString(false), Template.class);
         assertNotNull(template);
-        System.err.println(template.toString());
+        System.err.println(template.toString(false));
 
     }
 

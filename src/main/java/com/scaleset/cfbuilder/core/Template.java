@@ -99,8 +99,13 @@ public class Template {
         return result;
     }
 
-    public String toString() {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    public String toString(Boolean yaml) {
+        ObjectMapper mapper;
+        if (yaml) {
+            mapper = new ObjectMapper(new YAMLFactory());
+        } else {
+            mapper = new ObjectMapper();
+        }
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.PASCAL_CASE_TO_CAMEL_CASE);
