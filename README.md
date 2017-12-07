@@ -1,5 +1,9 @@
 cloudformation-builder
 ======================
+[![Build Status](https://travis-ci.org/StuPro-TOSCAna/cloudformation-builder.svg?branch=master)](https://travis-ci.org/StuPro-TOSCAna/cloudformation-builder)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e8da2c529bd4eea95a369bed5f8e582)](https://www.codacy.com/app/stupro-toscana/cloudformation-builder?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=StuPro-TOSCAna/cloudformation-builder&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/StuPro-TOSCAna/cloudformation-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/StuPro-TOSCAna/cloudformation-builder)
+
 
 CloudFormation-Builder is a Java 8 DSL for creating AWS CloudFormation templates.
 
