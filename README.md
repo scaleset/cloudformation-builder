@@ -64,4 +64,4 @@ Quick Start
 
 ### License
 
-CloudFormation-Builder is [Apache 2.0 licensed](http://www.apache.org/licenses/LICENSE-2.0.html).
+CloudFormation-Builder is licensed under the [Apache License 2.0](LICENSE).

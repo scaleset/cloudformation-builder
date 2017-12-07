@@ -40,7 +40,8 @@ public class CloudFormationJsonModule extends SimpleModule {
     class ResourceDeserializer extends JsonDeserializer<Resource> {
 
         @Override
-        public Resource deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+        public Resource deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+                throws IOException, JsonProcessingException {
             Resource result = null;
 
             ObjectCodec oc = jsonParser.getCodec();
@@ -48,10 +49,18 @@ public class CloudFormationJsonModule extends SimpleModule {
             String id = node.asText();
             String type = node.get("Type").asText();
             ObjectNode properties = (ObjectNode) node.get("Properties");
+            ObjectNode metadata = (ObjectNode) node.get("Metadata");
             Class<? extends Resource> resourceClass = types.get(type);
             if (resourceClass != null) {
-                ResourceInvocationHandler<? extends Resource> handler = new ResourceInvocationHandler<>(resourceClass, type, id, properties);
-                result = handler.proxy();
+                if (metadata != null) {
+                    ResourceInvocationHandler<? extends Resource> handler =
+                            new ResourceInvocationHandler<>(resourceClass, type, id, properties, metadata);
+                    result = handler.proxy();
+                } else {
+                    ResourceInvocationHandler<? extends Resource> handler =
+                            new ResourceInvocationHandler<>(resourceClass, type, id, properties);
+                    result = handler.proxy();
+                }
             }
             return result;
         }
@@ -60,7 +69,8 @@ public class CloudFormationJsonModule extends SimpleModule {
     static class ResourceSerializer extends JsonSerializer<Resource> {
 
         @Override
-        public void serialize(Resource resource, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+        public void serialize(Resource resource, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+                throws IOException, JsonProcessingException {
             jsonGenerator.writeObject(resource);
         }
     }

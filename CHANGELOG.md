@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Jenkinsfile and travis.yml to allow CI
 - Jacoco Plugin to the POM
 - "AWS::RDS::DBInstance" resource
+- Support of EC2s Metadata section
 
 ### Removed
-- Uneeded parts in `pom.xml` (signing, outdated and wrong parent)
+- Unneeded parts in `pom.xml` (signing, outdated and wrong parent)

@@ -7,12 +7,16 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.scaleset.cfbuilder.annotations.Type;
+import com.scaleset.cfbuilder.ec2.metadata.CFNInit;
+import com.scaleset.cfbuilder.ec2.metadata.Config;
+import com.scaleset.cfbuilder.ec2.metadata.ConfigSets;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Map;
 
 public class ResourceInvocationHandler<T extends Resource> implements InvocationHandler {
 
@@ -29,10 +33,10 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
     private String type;
 
     @JsonProperty("Properties")
-    private ObjectNode properties = JsonNodeFactory.instance.objectNode();
+    private ObjectNode properties = nodeFactory.objectNode();
 
-    @JsonProperty
-    private ObjectNode metadata = JsonNodeFactory.instance.objectNode();
+    @JsonProperty("Metadata")
+    private ObjectNode metadata = nodeFactory.objectNode();
 
     public ResourceInvocationHandler(Class<T> resourceClass, String id) {
         if (resourceClass.isAnnotationPresent(Type.class)) {
@@ -50,6 +54,14 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
         this.type = type;
         this.id = id;
         this.properties = properties;
+    }
+
+    public ResourceInvocationHandler(Class<T> resourceClass, String type, String id, ObjectNode properties, ObjectNode metadata) {
+        this.resourceClass = resourceClass;
+        this.type = type;
+        this.id = id;
+        this.properties = properties;
+        this.metadata = metadata;
     }
 
     protected Object doDefaultMethod(Object proxy, Method method, Object[] args) throws Throwable {
@@ -74,18 +86,30 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
 
     protected Object doSetter(Object proxy, Method method, Object[] args) {
         Object result = null;
-        String propertyName = getPropertyName(method);
+        if (args[0] instanceof CFNInit) { //is metadata
+            CFNInit cfnInit = (CFNInit) args[0];
+            JsonNode valueNode = toNode(cfnInit);
+            if (!valueNode.isNull()) {
+                ObjectNode cfnInitNode = this.metadata.putObject("AWS::CloudFormation::Init");
+                ConfigSets configSets = cfnInit.getConfigSets();
+                ObjectNode configSetsNode = cfnInitNode.putObject(configSets.getId());
+                configSets.getSets().forEach((name, list) -> configSetsNode.set(name, toNode(list)));
+                Map<String, Config> configs = cfnInit.getConfigs();
+                configs.forEach((name, config) -> cfnInitNode.set(name, toNode(config)));
+            }
+        } else { //is property
+            String propertyName = getPropertyName(method);
 
-        // We know args.length is 1 from isSetter check method
-        Object value = args[0];
+            // We know args.length is 1 from isSetter check method
+            Object value = args[0];
 
 
-        if (isArrayProperty(method, args)) {
-            setArrayProperty(propertyName, (Object[]) value);
-        } else {
-            setProperty(propertyName, value);
+            if (isArrayProperty(method, args)) {
+                setArrayProperty(propertyName, (Object[]) value);
+            } else {
+                setProperty(propertyName, value);
+            }
         }
-
         if (method.getReturnType().equals(resourceClass)) {
             result = proxy;
         }
@@ -95,6 +119,7 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
     /**
      * Get the setProperty name of the variable from the getter/setter method name
      */
+
     private String getPropertyName(Method method) {
         String result = method.getName();
         if (result.startsWith("set") || result.startsWith("get")) {
@@ -122,7 +147,7 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
                 result = type;
             } else if ("Properties".equals(name)) {
                 return properties;
-            } else if ("Metadata".equals(name)){
+            } else if ("Metadata".equals(name)) {
                 return metadata;
             }
         } else if (declaringClass.equals(Object.class)) {

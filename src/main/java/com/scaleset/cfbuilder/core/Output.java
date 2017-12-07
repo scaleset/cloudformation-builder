@@ -2,7 +2,9 @@ package com.scaleset.cfbuilder.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"Description", "Value"})
 public class Output {
 
     @JsonIgnore
@@ -11,6 +13,7 @@ public class Output {
     private Object value;
 
     private String description;
+
 
     public Output(String id, Object value, String description) {
         this.id = id;
@@ -29,4 +32,5 @@ public class Output {
     public Object getValue() {
         return value;
     }
+
 }
