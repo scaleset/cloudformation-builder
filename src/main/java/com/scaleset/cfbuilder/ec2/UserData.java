@@ -14,7 +14,7 @@ public class UserData {
 
     public UserData(Fn joinFn){
         dataMap = new HashMap<>();
-        dataMap.put("Fn:Base64", joinFn);
+        dataMap.put("Fn::Base64", joinFn);
     }
 
     @JsonAnyGetter

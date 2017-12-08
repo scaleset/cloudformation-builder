@@ -26,6 +26,17 @@ public class Fn {
         properties.put("Fn::" + name, parameters);
     }
 
+    public Fn(String name, String delimiter, Object... params) {
+        this.name = name;
+        List<Object> list = new ArrayList();
+        for (Object param : params) {
+            list.add(param);
+        }
+        parameters.add(delimiter);
+        parameters.add(list);
+        properties.put("Fn::" + name, parameters);
+    }
+
     public static Fn fn(String name, Object... params) {
         return new Fn(name, params);
     }

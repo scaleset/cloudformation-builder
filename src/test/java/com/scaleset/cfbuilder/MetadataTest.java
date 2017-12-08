@@ -78,7 +78,7 @@ public class MetadataTest {
                     .instanceType("t2.micro")
                     .securityGroupIds(webServerSecurityGroup)
                     .keyName(keyNameVar)
-                    .userData(new UserData(new Fn("Join", "eins", "zwei")));
+                    .userData(new UserData(new Fn("Join", "", "eins", "zwei")));
 
 
             Object publicDNSName = webServerInstance.fnGetAtt("PublicDnsName");
