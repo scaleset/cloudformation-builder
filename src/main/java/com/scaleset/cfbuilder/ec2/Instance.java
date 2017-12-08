@@ -21,7 +21,7 @@ public interface Instance extends Taggable {
 
     Instance subnetId(Object subnetId);
 
-    Instance userData(Object userData);
+    Instance userData(UserData userData);
 
     // non property additions
 

@@ -1,9 +1,11 @@
 package com.scaleset.cfbuilder;
 
+import com.scaleset.cfbuilder.core.Fn;
 import com.scaleset.cfbuilder.core.Module;
 import com.scaleset.cfbuilder.core.Template;
 import com.scaleset.cfbuilder.ec2.Instance;
 import com.scaleset.cfbuilder.ec2.SecurityGroup;
+import com.scaleset.cfbuilder.ec2.UserData;
 import com.scaleset.cfbuilder.ec2.metadata.*;
 import org.junit.Test;
 
@@ -75,7 +77,8 @@ public class MetadataTest {
                     .imageId("ami-0def3275")
                     .instanceType("t2.micro")
                     .securityGroupIds(webServerSecurityGroup)
-                    .keyName(keyNameVar);
+                    .keyName(keyNameVar)
+                    .userData(new UserData(new Fn("Join", "eins", "zwei")));
 
 
             Object publicDNSName = webServerInstance.fnGetAtt("PublicDnsName");

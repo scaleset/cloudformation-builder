@@ -7,9 +7,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.scaleset.cfbuilder.annotations.Type;
+import com.scaleset.cfbuilder.ec2.UserData;
 import com.scaleset.cfbuilder.ec2.metadata.CFNInit;
 import com.scaleset.cfbuilder.ec2.metadata.Config;
 import com.scaleset.cfbuilder.ec2.metadata.ConfigSets;
+import com.scaleset.cfbuilder.iam.User;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
@@ -97,6 +99,10 @@ public class ResourceInvocationHandler<T extends Resource> implements Invocation
                 Map<String, Config> configs = cfnInit.getConfigs();
                 configs.forEach((name, config) -> cfnInitNode.set(name, toNode(config)));
             }
+        } else if (args[0] instanceof UserData) {
+            UserData userData = (UserData) args[0];
+            setProperty("UserData", userData);
+
         } else { //is property
             String propertyName = getPropertyName(method);
 
