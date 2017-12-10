@@ -67,10 +67,12 @@ public class MetadataTest {
 
             CFNCommand configure_mysql = new CFNCommand("configure_myphp", "sh /tmp/configure_myphpapp.sh")
                     .addEnv("database_name", "mydatabase");
-            Config configure = new Config(CFNINIT_CONFIG_CONFIGURE).putCommand(configure_mysql);
             CFNInit cfnInit = new CFNInit(CFNINIT_CONFIGSET)
-                    .addConfig(CFNINIT_CONFIGSET, install)
-                    .addConfig(CFNINIT_CONFIGSET, configure);
+                    .addConfig(CFNINIT_CONFIGSET, install);
+
+            cfnInit.getOrAddConfig(CFNINIT_CONFIGSET, CFNINIT_CONFIG_CONFIGURE)
+                    .putCommand(configure_mysql);
+
 
             SecurityGroup webServerSecurityGroup = resource(SecurityGroup.class, "WebServerSecurityGroup")
                     .groupDescription("Enable ports 80 and 22")

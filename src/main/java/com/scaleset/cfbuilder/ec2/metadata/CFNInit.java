@@ -37,6 +37,20 @@ public class CFNInit {
         return this.configs;
     }
 
+    public Config getConfig(String config) {
+        return this.configs.get(config);
+    }
+
+    public Config getOrAddConfig(String configSet, String config) {
+        if (this.configs.get(config) != null){
+            return this.configs.get(config);
+        } else {
+            Config newConfig = new Config(config);
+            addConfig(configSet, newConfig);
+            return newConfig;
+        }
+    }
+
     public ConfigSets getConfigSets() {
         return this.configSets;
     }
