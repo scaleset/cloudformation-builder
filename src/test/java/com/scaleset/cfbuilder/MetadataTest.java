@@ -6,7 +6,13 @@ import com.scaleset.cfbuilder.core.Template;
 import com.scaleset.cfbuilder.ec2.Instance;
 import com.scaleset.cfbuilder.ec2.SecurityGroup;
 import com.scaleset.cfbuilder.ec2.UserData;
-import com.scaleset.cfbuilder.ec2.metadata.*;
+import com.scaleset.cfbuilder.ec2.metadata.CFNCommand;
+import com.scaleset.cfbuilder.ec2.metadata.CFNFile;
+import com.scaleset.cfbuilder.ec2.metadata.CFNInit;
+import com.scaleset.cfbuilder.ec2.metadata.CFNPackage;
+import com.scaleset.cfbuilder.ec2.metadata.CFNService;
+import com.scaleset.cfbuilder.ec2.metadata.Config;
+import com.scaleset.cfbuilder.ec2.metadata.SimpleService;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -78,8 +84,7 @@ public class MetadataTest {
                     .instanceType("t2.micro")
                     .securityGroupIds(webServerSecurityGroup)
                     .keyName(keyNameVar)
-                    .userData(new UserData(new Fn("Join", "", "eins", "zwei")));
-
+                    .userData(new UserData(Fn.fnDelimiter("Join", "", "eins", "zwei")));
 
             Object publicDNSName = webServerInstance.fnGetAtt("PublicDnsName");
 
