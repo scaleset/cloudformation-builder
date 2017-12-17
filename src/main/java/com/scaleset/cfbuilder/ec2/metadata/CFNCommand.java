@@ -14,7 +14,7 @@ public class CFNCommand {
     public String command;
 
     @JsonProperty("env")
-    public Map<String, String> env;
+    public Map<String, Object> env;
 
     @JsonProperty("cwd")
     public String cwd;
@@ -34,7 +34,7 @@ public class CFNCommand {
         return this.id;
     }
 
-    public CFNCommand addEnv(String envVar, String value) {
+    public CFNCommand addEnv(String envVar, Object value) {
         this.env.put(envVar, value);
         return this;
     }
