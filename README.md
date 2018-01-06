@@ -1,7 +1,11 @@
 cloudformation-builder
 ======================
+[![Build Status](https://travis-ci.org/StuPro-TOSCAna/cloudformation-builder.svg?branch=master)](https://travis-ci.org/StuPro-TOSCAna/cloudformation-builder)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e8da2c529bd4eea95a369bed5f8e582)](https://www.codacy.com/app/stupro-toscana/cloudformation-builder?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=StuPro-TOSCAna/cloudformation-builder&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/StuPro-TOSCAna/cloudformation-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/StuPro-TOSCAna/cloudformation-builder)
 
-CloudFormation-Builder is a Java 8 framework for creating AWS CloudFormation templates.
+
+CloudFormation-Builder is a Java 8 DSL for creating AWS CloudFormation templates.
 
 Quick Start
 -----------
@@ -61,7 +65,20 @@ Quick Start
 
 ```
 
+## Contributing
+See our [contribution guidelines](CONTRIBUTING.md) for detailed information on how to contribute to the cloudformation-builder.
+
+## Tools
+Tools that are used in this project.
+
+- IDE: [IntelliJ](https://www.jetbrains.com/idea/)
+- Code generation: [Project Lombok](https://projectlombok.org/)
+- UML Modelling: [Lucidchart](https://www.lucidchart.com/)
+- Project management: [ZenHub](https://www.zenhub.com/)
+- CI: [TravisCI](https://travis-ci.org/StuPro-TOSCAna/TOSCAna)
+- Code analysis: [Codacy](https://www.codacy.com/app/stupro-toscana/TOSCAna/dashboard)
+- Code coverage: [Codecov](https://codecov.io/gh/StuPro-TOSCAna/TOSCAna), [Get browser extension](https://github.com/codecov/browser-extension)
 
 ### License
 
-CloudFormation-Builder is [Apache 2.0 licensed](http://www.apache.org/licenses/LICENSE-2.0.html).
+CloudFormation-Builder is licensed under the [Apache License 2.0](LICENSE).

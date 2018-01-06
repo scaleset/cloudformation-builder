@@ -1,12 +1,13 @@
 package com.scaleset.cfbuilder.core;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Fn {
 
@@ -26,8 +27,14 @@ public class Fn {
         properties.put("Fn::" + name, parameters);
     }
 
+
     public static Fn fn(String name, Object... params) {
         return new Fn(name, params);
+    }
+
+    public static Fn fnDelimiter(String name, String delimiter, Object... params){
+        List<Object> list = Arrays.asList(params);
+        return new Fn(name, delimiter, list);
     }
 
     @JsonAnyGetter

@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 @Type("AWS::EC2::SecurityGroup")
 public interface SecurityGroup extends Resource {
 
+    SecurityGroup groupDescription(String description);
+
     SecurityGroup vpcId(Object vpcId);
 
     SecurityGroup securityGroupIngress(AnonymousSecurityGroupIngress... securityGroupIngress);
